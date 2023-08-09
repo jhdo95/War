@@ -38,8 +38,30 @@ drawButton.addEventListener('click', () => {
 
 /*----- functions -----*/
 function playRound() {
-    
+    // Check if there are cards left for both players
+    if (playerCards.length > 0 && computerCards.length > 0) {
+        const playerCard = playerCards.pop();
+        const computerCard = computerCards.pop();
+
+        // Compare the cards and determine winner of the round
+    if (playerCard.value > computerCard.value) {
+        //Player wins and will add the cards to the player's deck.
+        playerCards.unshift(playerCard, computerCard);
+        //update results 
+        results.p = 'win';
+    } else if (computerCard.value > playerCard.value) {
+        //computer wins and can add the cards to the computer's deck
+        computerCards.unshift(playerCard, computerCard);
+        //update results
+        results.c = 'win';
+    } else {
+        // It's a tie, time to go to war!
+        intiateWar(playerCard, computerCard);
+    }
+    render();
+    }
 }
+
 
 function renderDeckInContainer(deck, container) {
     container.innerHTML = '';
@@ -93,7 +115,6 @@ function render() {
 
 }
 function init() {
-    const playerCards = shuffledDeck.slice(0, splitPoint);
     results = {
         p: '',
         c: '',
