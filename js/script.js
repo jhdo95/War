@@ -38,7 +38,8 @@ drawButton.addEventListener('click', () => {
 
 /*----- functions -----*/
 function playRound() {
-    // Check if there are cards left for both players
+
+
     if (playerCards.length > 0 && computerCards.length > 0) {
         const playerCard = playerCards.pop();
         const computerCard = computerCards.pop();
@@ -56,12 +57,27 @@ function playRound() {
         results.c = 'win';
     } else {
         // It's a tie, time to go to war!
-        intiateWar(playerCard, computerCard);
+        initiateWar(playerCard, computerCard);
     }
-    render();
+    const playerCardImagePath = `css/card-library/images/${playerCard.face}.png`;
+    const computerCardImagePath = `css/card-library/images/${computerCard.face}.png`;
+
+    pCardEl.style.backgroundImage = `url(${playerCardImagePath})`;
+    cCardEl.style.backgroundImage = `url(${computerCardImagePath})`;
+
+
+
+    //Update card display
+    renderDeckInContainer(playerCards, pCardEl);
+    renderDeckInContainer(computerCards, cCardEl);
+    renderResults();
     }
 }
 
+function initiateWar(playerCard, computerCard) {
+    //Place additional cards on the "field" and compare the final cards
+    //Update results
+}
 
 function renderDeckInContainer(deck, container) {
     container.innerHTML = '';
@@ -104,26 +120,43 @@ function buildOriginalDeck() {
     return deck;
 }
 function renderResults() {
-//pCardEl.src = 
-
+    const resultContainer = document.getElementById('resultContainer');
+//Display the results based on 'results' and 'winner' variables
+    if (results.p === 'win') {
+        resultContainer.textContent = 'Player wins this round!';
+    } else if (results.c === 'win') {
+        resultContainer.textContent = 'Computer wins this round!';
+    } else {
+        resultContainer.textContent = "It's a tie! Time to go to war!";
+    }
 }
 
 function render() {
-   // renderNewShuffledDeck();
+    renderDeckInContainer(playerCards, pCardEl);
+    renderDeckInContainer(computerCards, cCardEl);
     renderResults();
 
 
 }
 function init() {
+    shuffledDeck = getNewShuffledDeck(); // Re-Shuffle the deck
+    playerCards.splice(0, playerCards.length, ...shuffledDeck.slice(0, splitPoint));
+    computerCards.splice(0, computerCards.length, ...shuffledDeck.slice(splitPoint));
+
+
     results = {
         p: '',
         c: '',
     };
-    render();
+
+
+    renderDeckInContainer(playerCards, pCardEl);
+    renderDeckInContainer(computerCards, cCardEl);
+    renderResults();
 }
 
 
-//init();
+init();
 
 //Initialize the deck and shuffle it
 

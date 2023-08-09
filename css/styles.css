@@ -39,14 +39,25 @@ body {
 .card {
     width: 120px;
     height: 180px;
+    box-sizing: content-box;
     border: 1px solid black;
     border-radius: 5px;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    font-weight: bold;
+    background-size: cover; 
+    background-repeat: no-repeat;
+     background-color: white;
+    /* display: flex; */
+    justify-content: center; 
+    align-items: center; 
+     font-size: 24px; 
+     font-weight: bold; 
+}
+
+#playerCards {
+    background-image: url('css/card-library/images/')
+}
+
+#computerCards {
+    background-image: url('css/card-library/images/')
 }
 
 #playButton {
