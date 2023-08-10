@@ -59,17 +59,20 @@ function playRound() {
         // It's a tie, time to go to war!
         initiateWar(playerCard, computerCard);
     }
-    const playerCardImagePath = `css/card-library/images/${playerCard.face}.png`;
-    const computerCardImagePath = `css/card-library/images/${computerCard.face}.png`;
+    // const playerCardImagePath = `css/card-library/images/${playerCard.face}.png`;
+    // const computerCardImagePath = `css/card-library/images/${computerCard.face}.png`;
 
-    pCardEl.style.backgroundImage = `url(${playerCardImagePath})`;
-    cCardEl.style.backgroundImage = `url(${computerCardImagePath})`;
+    // console.log('Player Card Image Path:', playerCardImagePath);
+    // console.log('Computer Card Image Path:', computerCardImagePath);
 
+    // pCardEl.style.backgroundImage = `url(${playerCardImagePath})`;
+    // cCardEl.style.backgroundImage = `url(${computerCardImagePath})`;
 
-
+   
+    console.log('playerCard', playerCard)
     //Update card display
-    renderDeckInContainer(playerCards, pCardEl);
-    renderDeckInContainer(computerCards, cCardEl);
+    renderDeckInContainer(playerCard, pCardEl);
+    renderDeckInContainer(computerCard, cCardEl);
     renderResults();
     }
 }
@@ -79,17 +82,17 @@ function initiateWar(playerCard, computerCard) {
     //Update results
 }
 
-function renderDeckInContainer(deck, container) {
+function renderDeckInContainer(card, container) {
     container.innerHTML = '';
     // Let's build the cards as a string of HTML
-    let cardsHtml = '';
-    deck.forEach(function(card) {
-      cardsHtml += `<div class="card ${card.face}"></div>`;
-    });
+    // container.classList.add(card.face);
+     const cardsHtml = `<div class="card ${card.face}"></div>`;
+
     // Or, use reduce to 'reduce' the array into a single thing - in this case a string of HTML markup 
     // const cardsHtml = deck.reduce(function(html, card) {
     //   return html + `<div class="card ${card.face}"></div>`;
     // }, '');
+    console.log(card, container);
     container.innerHTML = cardsHtml;
   }
 //shuffle the deck

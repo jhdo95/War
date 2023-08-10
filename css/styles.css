@@ -52,13 +52,7 @@ body {
      font-weight: bold; 
 }
 
-#playerCards {
-    background-image: url('css/card-library/images/')
-}
 
-#computerCards {
-    background-image: url('css/card-library/images/')
-}
 
 #playButton {
    visibility: hidden;
