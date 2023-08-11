@@ -24,4 +24,5 @@ Technologies used: HTML, CSS, Javascript
 
 Future Plans: Add some more depth to base CSS, Change background-screen during War to a "battlefield" arena,
 
+Screenshot:
 ![War (The Card Game) Browser Edition](https://i.imgur.com/li8IWMM.png)
