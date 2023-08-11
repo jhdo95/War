@@ -38,7 +38,6 @@ drawButton.addEventListener('click', () => {
 function playRound() {
     results.p ='';
     results.c ='';
-    results.t ='';
 
     if (playerCards.length > 0 && computerCards.length > 0) {
         const playerCard = playerCards.pop();
@@ -56,7 +55,6 @@ function playRound() {
         //update results
         results.c = 'c';
     } if (playerCard.value === computerCard.value) {
-        results.t = 't';
         // It's a tie, time to go to war!
         initiateWar(playerCard, computerCard);
         
@@ -64,10 +62,10 @@ function playRound() {
 
 
    
-    console.log('playerCard:', playerCard);
-    console.log('computerCard:',computerCard);
-    console.log('playerCards:', playerCards);
-    console.log('computerCards:', computerCards);
+    // console.log('playerCard:', playerCard);
+    // console.log('computerCard:',computerCard);
+    // console.log('playerCards:', playerCards);
+    // console.log('computerCards:', computerCards);
     //Update card display
     renderDeckInContainer(playerCard, pCardEl);
     renderDeckInContainer(computerCard, cCardEl);
@@ -88,9 +86,11 @@ function initiateWar(playerCard, computerCard) {
         // Check if any player has run out of cards
         if (playerCards.length === 0) {
             results.c = 'c'; // Computer wins as player is out of cards.
+            console.log("Player has run out of cards!");
             return;
         }  if (computerCards.length === 0) {
             results.p = 'p';
+            console.log("Computer has run out of cards!");
             return;
         }
         // Flip a card from each player's deck
@@ -101,9 +101,8 @@ function initiateWar(playerCard, computerCard) {
         warCards.push(playerWarCard, computerWarCard);
     }
     // Compare the final cards after war
-    let playerWarValue = warCards[warCards.length - 1].value;
+    let playerWarValue = warCards[warCards.length - 2].value;
     let computerWarValue = warCards[warCards.length - 1].value;
-    console.log(playerCard, computerCard);
 
     // results.p ='';
     // results.c ='';
@@ -112,14 +111,14 @@ function initiateWar(playerCard, computerCard) {
     if (playerWarValue > computerWarValue) {
         // Player wins the war and takes all the war cards.
         playerCards.unshift(...warCards);
-        results.p = 'p';
+        results.pWar = 'pWar';
     }  if (computerWarValue > playerWarValue) {
         // Computer wins the war and takes all the cards.
         computerCards.unshift(...warCards);
-        results.c = 'c';
+        results.cWar = 'cWar';
     } if (playerCard.value === computerCard.value) {
         console.log('tie');
-        results.t = 't';
+        // results.t = 't';
         // Another war as the war cards are of the same rank.
         const newPlayerWar = playerCards.pop();
         const newComputerWar = computerCards.pop();
@@ -172,9 +171,12 @@ function renderResults() {
     } else if (results.c === 'c') {
         resultContainer.textContent = 'Computer wins this round!';
     } 
-        else if (results.t === 't') 
-        resultContainer.textContent = "It's a tie! Time to go to war!";
-    
+        else if (results.pWar === 'pWar') {
+        resultContainer.textContent = "It's a tie! Player wins the war!";
+    }
+        else if (results.cWar === 'cWar') {
+        resultContainer.textContent = "It's a tie! Computer wins the war!";
+    }
     console.log(results);
 
 }
@@ -195,7 +197,8 @@ function init() {
     results = {
         p: '',
         c: '',
-        t: '',
+        pWar: '',
+        cWar: ''
     };
     render();
 }
