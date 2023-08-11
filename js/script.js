@@ -36,26 +36,30 @@ drawButton.addEventListener('click', () => {
 
 /*----- functions -----*/
 function playRound() {
-
+    results.p ='';
+    results.c ='';
+    results.t ='';
 
     if (playerCards.length > 0 && computerCards.length > 0) {
         const playerCard = playerCards.pop();
         const computerCard = computerCards.pop();
-
+    
         // Compare the cards and determine winner of the round
     if (playerCard.value > computerCard.value) {
         //Player wins and will add the cards to the player's deck.
         playerCards.unshift(playerCard, computerCard);
         //update results 
         results.p = 'p';
-    } else if (computerCard.value > playerCard.value) {
+    }  if (computerCard.value > playerCard.value) {
         //computer wins and can add the cards to the computer's deck
         computerCards.unshift(playerCard, computerCard);
         //update results
         results.c = 'c';
-    } else {
+    } if (playerCard.value === computerCard.value) {
+        results.t = 't';
         // It's a tie, time to go to war!
         initiateWar(playerCard, computerCard);
+        
     }
 
 
@@ -73,14 +77,19 @@ function playRound() {
 }
 
 function initiateWar(playerCard, computerCard) {
+    // results.p = '';
+    // results.c = '';
+    // results.t = '';
+
     const warCards = [playerCard, computerCard]; //Start with cards that caused the war
     // Each player places 4 cards down
     for (let i = 0; i < 4; i++) {
+        console.log(playerCards, computerCards);
         // Check if any player has run out of cards
         if (playerCards.length === 0) {
             results.c = 'c'; // Computer wins as player is out of cards.
             return;
-        } else if (computerCards.length === 0) {
+        }  if (computerCards.length === 0) {
             results.p = 'p';
             return;
         }
@@ -92,24 +101,32 @@ function initiateWar(playerCard, computerCard) {
         warCards.push(playerWarCard, computerWarCard);
     }
     // Compare the final cards after war
-    const playerWarValue = warCards[warCards.length - 1].value;
-    const computerWarValue = warCards[warCards.length - 2].value;
+    let playerWarValue = warCards[warCards.length - 1].value;
+    let computerWarValue = warCards[warCards.length - 1].value;
+    console.log(playerCard, computerCard);
 
+    // results.p ='';
+    // results.c ='';
+    // results.t ='';
+    console.log('results', playerWarValue, computerWarValue);
     if (playerWarValue > computerWarValue) {
         // Player wins the war and takes all the war cards.
         playerCards.unshift(...warCards);
         results.p = 'p';
-    } else if (computerWarValue > playerWarValue) {
+    }  if (computerWarValue > playerWarValue) {
         // Computer wins the war and takes all the cards.
         computerCards.unshift(...warCards);
         results.c = 'c';
-    } else {
+    } if (playerCard.value === computerCard.value) {
+        console.log('tie');
+        results.t = 't';
         // Another war as the war cards are of the same rank.
         const newPlayerWar = playerCards.pop();
         const newComputerWar = computerCards.pop();
         initiateWar(newPlayerWar, newComputerWar);
     }
     render();
+
 }
 
 function renderDeckInContainer(card, container) {
@@ -145,16 +162,21 @@ function buildOriginalDeck() {
     return deck;
 }
 function renderResults() {
-    let resultContainer = document.getElementById('resultContainer');
+        // results.p = '';
+        // results.c = '';
+        // results.t = '';
+    const resultContainer = document.getElementById('resultContainer');
 //Display the results based on 'results'
     if (results.p === 'p') {
         resultContainer.textContent = 'Player wins this round!';
     } else if (results.c === 'c') {
         resultContainer.textContent = 'Computer wins this round!';
-    } else {
+    } 
+        else if (results.t === 't') 
         resultContainer.textContent = "It's a tie! Time to go to war!";
-    }
     
+    console.log(results);
+
 }
 
 function render() {
@@ -173,6 +195,7 @@ function init() {
     results = {
         p: '',
         c: '',
+        t: '',
     };
     render();
 }

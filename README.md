@@ -1,5 +1,5 @@
 # War (The Card Game)
-Getting Started: (link)
+Getting Started: https://jhdo95.github.io/War/
 
 Objective: The goal of the game is to win all the cards.
 
