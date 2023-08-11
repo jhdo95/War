@@ -9,10 +9,8 @@ const drawButton = document.getElementById('drawButton');
 
 /*----- state variables (things to be remembered throughout execution of program can think of like global data.) -----*/ 
 let shuffledDeck = getNewShuffledDeck();
-let results; // Object key of 'player1', 'computer'
-             // Checks whether player1's or computers card is higher. Tie = war.
-             
-let winner; // String of 'p' if player wins, 'c' if computer wins.
+let results;
+let winner;
 
 
 
